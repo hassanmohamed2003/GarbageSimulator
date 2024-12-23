@@ -8,4 +8,9 @@ public class LevelRequirements : ScriptableObject
     public float Glass;
     public float Humans;
     public float Animals;
+
+    public float Total
+    {
+        get { return Plastic + Metal + Glass; }
+    }
 }

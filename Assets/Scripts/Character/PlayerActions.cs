@@ -13,15 +13,23 @@ public class PlayerActions : MonoBehaviour
     private GameObject _trashObject;
     private GameObject _containerObject;
     List<GameObject> trashCollected = new List<GameObject>();
-    private float collectedPlastic;
-    private float collectedMetal;
-    private float collectedGlass;
+
+    private float _totalItems;
+    private float _totalPlastic;
+    private float _totalMetal;
+    private float _totalGlass;
+
+    private float _collectedPlastic;
+    private float _collectedMetal;
+    private float _collectedGlass;
     public TextMeshProUGUI plasticText;
     public TextMeshProUGUI glassText;
     public TextMeshProUGUI metalText;
-    public float CollectedPlastic { get => collectedPlastic; set => collectedPlastic = value; }
-    public float CollectedMetal { get => collectedMetal; set => collectedMetal = value; }
-    public float CollectedGlass { get => collectedGlass; set => collectedGlass = value; }
+    public TextMeshProUGUI totalText;
+    [SerializeField] private GameManager gameManager;
+    public float CollectedPlastic { get => _collectedPlastic; set => _collectedPlastic = value; }
+    public float CollectedMetal { get => _collectedMetal; set => _collectedMetal = value; }
+    public float CollectedGlass { get => _collectedGlass; set => _collectedGlass = value; }
 
     private void Awake()
     {
@@ -30,6 +38,12 @@ public class PlayerActions : MonoBehaviour
         _Input.Gameplay.PickingUp.performed += onPickUp;
         _Input.Gameplay.Drop.performed += onDrop;
         circleCollider = GetComponent<CircleCollider2D>();
+
+        _totalPlastic = gameManager.levelRequirements.Plastic;
+        _totalGlass = gameManager.levelRequirements.Glass;
+        _totalMetal = gameManager.levelRequirements.Metal;
+        _totalItems = gameManager.levelRequirements.Total;
+        UpdateCounters();
     }
 
     private void OnEnable()
@@ -45,14 +59,19 @@ public class PlayerActions : MonoBehaviour
 
     public void UpdateCounters()
     {
-        Debug.Log(collectedPlastic + ": amount plastic");
+        Debug.Log(_collectedPlastic + ": amount plastic");
         // Update the text of each TextMeshPro element
-        plasticText.text = $"Plastic: {collectedPlastic}";
-        glassText.text = $"Glass: {collectedGlass}";
-        metalText.text = $"Metal: {collectedMetal}";
-
+        plasticText.text = $"Plastic: {_collectedPlastic} of the {_totalPlastic}";
+        glassText.text = $"Glass: {_collectedGlass} of the {_totalGlass}";
+        metalText.text = $"Metal: {_collectedMetal} of the {_totalMetal}";
+        totalText.text = $"Left: {_totalItems}";
         _trashObject = null;
         _containerObject = null;
+
+        if(_totalItems == 0)
+        {
+            totalText.text = $"Completed!";
+        }
     }
 
     private void onDrop(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -62,15 +81,18 @@ public class PlayerActions : MonoBehaviour
             switch (container.acceptedItem)
             {
                 case ItemType.Plastic:
-                    collectedPlastic = 0;
+                    _totalPlastic -= _collectedPlastic;
+                    _collectedPlastic = 0;
                     UpdateCounters();
                     break;
                 case ItemType.Glass:
-                    collectedGlass = 0;
+                    _totalGlass -= _collectedGlass;
+                    _collectedGlass = 0;
                     UpdateCounters();
                     break;
                 case ItemType.Metal:
-                    collectedMetal = 0;
+                    _totalMetal -= _collectedMetal;
+                    _collectedMetal = 0;
                     UpdateCounters();
                     break;
             }
@@ -103,19 +125,20 @@ public class PlayerActions : MonoBehaviour
     {
         if (_trashObject != null && _trashObject.TryGetComponent<Trash>(out Trash trash))
         {
+            _totalItems--;
             _trashObject.SetActive(false);
             switch (trash.itemType)
             {
                 case ItemType.Plastic:
-                    collectedPlastic++;
+                    _collectedPlastic++;
                     UpdateCounters();
                     break;
                 case ItemType.Glass:
-                    collectedGlass++;
+                    _collectedGlass++;
                     UpdateCounters();
                     break;
                 case ItemType.Metal:
-                    collectedMetal++;
+                    _collectedMetal++;
                     UpdateCounters();
                     break;
             }
