@@ -49,7 +49,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""Drop"",
                     ""type"": ""Button"",
                     ""id"": ""c68f7457-2745-4e26-ab74-e7731758e595"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
