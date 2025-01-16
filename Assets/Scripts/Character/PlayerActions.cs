@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerActions : MonoBehaviour
 {
@@ -22,10 +24,24 @@ public class PlayerActions : MonoBehaviour
     private float _collectedPlastic;
     private float _collectedMetal;
     private float _collectedGlass;
+    private float _collectionLimit;
+    private float _collectionLimitCounter;
+    public UnityEvent onCompleted;
+
+    private bool firstPickUp = true;
+    private bool firstDrop = true;
+    private bool firstBagFull = true;
+    private bool bagTextShowing = false;
+    public UnityEvent onFirstPickup;
+    public UnityEvent onFirstDrop;
+    public UnityEvent onFirstBagFull;
+    public UnityEvent removeBagText;
+
+    //TODO: put this in a seperate class, this has nothing to do with Player
     public TextMeshProUGUI plasticText;
     public TextMeshProUGUI glassText;
     public TextMeshProUGUI metalText;
-    public TextMeshProUGUI totalText;
+    public TextMeshProUGUI limitText;
     [SerializeField] private GameManager gameManager;
     public float CollectedPlastic { get => _collectedPlastic; set => _collectedPlastic = value; }
     public float CollectedMetal { get => _collectedMetal; set => _collectedMetal = value; }
@@ -43,6 +59,9 @@ public class PlayerActions : MonoBehaviour
         _totalGlass = gameManager.levelRequirements.Glass;
         _totalMetal = gameManager.levelRequirements.Metal;
         _totalItems = gameManager.levelRequirements.Total;
+        _collectionLimit = gameManager.levelRequirements.CollectLimit;
+        _collectionLimitCounter = gameManager.levelRequirements.CollectLimit;
+
         UpdateCounters();
     }
 
@@ -64,33 +83,52 @@ public class PlayerActions : MonoBehaviour
         plasticText.text = $"Plastic: {_collectedPlastic} of the {_totalPlastic}";
         glassText.text = $"Glass: {_collectedGlass} of the {_totalGlass}";
         metalText.text = $"Metal: {_collectedMetal} of the {_totalMetal}";
-        totalText.text = $"Left: {_totalItems}";
+        limitText.text = $"Space left: {_collectionLimitCounter}";
+
+        if(_collectionLimitCounter == 0)
+        {
+            limitText.text = $"Bag Full!";
+        }
+
         _trashObject = null;
         _containerObject = null;
 
-        if(_totalItems == 0)
+        bool hasNoItemsCollected = _collectedGlass == 0 && _collectedPlastic == 0 && _collectedMetal == 0;
+        if(_totalItems == 0 && hasNoItemsCollected)
         {
-            totalText.text = $"Completed!";
+            limitText.text = $"Completed!";
+            onCompleted.Invoke();
         }
     }
 
     private void onDrop(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+
+
         if (_containerObject != null && _containerObject.TryGetComponent<Container>(out Container container))
         {
+            if (firstDrop)
+            {
+                firstDrop = false;
+                onFirstDrop.Invoke();
+            }
+
             switch (container.acceptedItem)
             {
                 case ItemType.Plastic:
+                    emptyBag(_collectedPlastic);
                     _totalPlastic -= _collectedPlastic;
                     _collectedPlastic = 0;
                     UpdateCounters();
                     break;
                 case ItemType.Glass:
+                    emptyBag(_collectedGlass);
                     _totalGlass -= _collectedGlass;
                     _collectedGlass = 0;
                     UpdateCounters();
                     break;
                 case ItemType.Metal:
+                    emptyBag(_collectedMetal);
                     _totalMetal -= _collectedMetal;
                     _collectedMetal = 0;
                     UpdateCounters();
@@ -99,6 +137,18 @@ public class PlayerActions : MonoBehaviour
         }
 
 
+    }
+
+    private void emptyBag(float amount)
+    {
+
+        if (bagTextShowing)
+        {
+            bagTextShowing = false;
+            removeBagText.Invoke();
+        }
+
+        _collectionLimitCounter = Mathf.Clamp(_collectionLimitCounter + amount, 0, gameManager.levelRequirements.CollectLimit);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -123,22 +173,44 @@ public class PlayerActions : MonoBehaviour
 
     private void onPickUp(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+
+        if (_collectedPlastic + _collectedMetal + _collectedGlass >= _collectionLimit)
+        {
+            if (firstBagFull)
+            {
+                firstBagFull = false;
+                bagTextShowing = true;
+                onFirstBagFull.Invoke();
+            }
+
+            return;
+        }
+
         if (_trashObject != null && _trashObject.TryGetComponent<Trash>(out Trash trash))
         {
+            if (firstPickUp)
+            {
+                firstPickUp = false;
+                onFirstPickup.Invoke();
+            }
+
             _totalItems--;
             _trashObject.SetActive(false);
             switch (trash.itemType)
             {
                 case ItemType.Plastic:
                     _collectedPlastic++;
+                    _collectionLimitCounter--;
                     UpdateCounters();
                     break;
                 case ItemType.Glass:
                     _collectedGlass++;
+                    _collectionLimitCounter--;
                     UpdateCounters();
                     break;
                 case ItemType.Metal:
                     _collectedMetal++;
+                    _collectionLimitCounter--;
                     UpdateCounters();
                     break;
             }
@@ -155,6 +227,6 @@ public class PlayerActions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
