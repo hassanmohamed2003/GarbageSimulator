@@ -1,48 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float _playerSpeed = 10;
-    PlayerInput _Input;
-    Vector2 _Movement;
-    Rigidbody2D _rb;
+    public float moveSpeed = 5f; 
+    private Rigidbody2D rb; 
+    private Animator animator; 
 
-    private void Awake()
+    private Vector2 movement; 
+    private Vector2 lastDirection; 
+    void Awake()
     {
-        _Input = new PlayerInput();
-        _rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
-    private void OnEnable()
-    {
-        _Input.Enable();
-
-        _Input.Gameplay.Movement.performed += onMovement;
-        _Input.Gameplay.Movement.canceled += onMovement;
-    }
-
-    private void OnDisable()
-    {
-        _Input.Disable();
-    }
-
-    private void onMovement(InputAction.CallbackContext context)
-    {
-        _Movement = context.ReadValue<Vector2>();
-
-    }
-
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
         
+        lastDirection = Vector2.down; 
     }
 
-    private void FixedUpdate()
+    void Update()
     {
-        _rb.linearVelocity = _Movement * _playerSpeed;
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+        
+        if (movement != Vector2.zero)
+        {
+            lastDirection = movement.normalized;
+        }
+        
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude); 
+        animator.SetFloat("LastHorizontal", lastDirection.x);
+        animator.SetFloat("LastVertical", lastDirection.y);
+    }
+
+    void FixedUpdate()
+    {
+        rb.linearVelocity = movement.normalized * moveSpeed;
     }
 }
