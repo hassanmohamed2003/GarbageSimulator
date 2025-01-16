@@ -14827,8 +14827,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.017730849}
-  m_Radius: 1.4255404
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.11
 --- !u!114 &1583355759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15897,9 +15897,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5248017246125061594, guid: e8272a7b8237eb7429315501618bbb0a, type: 3}
+      propertyPath: m_Size.x
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248017246125061594, guid: e8272a7b8237eb7429315501618bbb0a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248017246125061594, guid: e8272a7b8237eb7429315501618bbb0a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248017246125061594, guid: e8272a7b8237eb7429315501618bbb0a, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248017246125061594, guid: e8272a7b8237eb7429315501618bbb0a, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7121697115782911622, guid: e8272a7b8237eb7429315501618bbb0a, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139329486295677400, guid: e8272a7b8237eb7429315501618bbb0a, type: 3}
+      propertyPath: moveSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
