@@ -80,9 +80,9 @@ public class PlayerActions : MonoBehaviour
     {
         Debug.Log(_collectedPlastic + ": amount plastic");
         // Update the text of each TextMeshPro element
-        plasticText.text = $"Plastic: {_collectedPlastic} of the {_totalPlastic}";
-        glassText.text = $"Glass: {_collectedGlass} of the {_totalGlass}";
-        metalText.text = $"Metal: {_collectedMetal} of the {_totalMetal}";
+        plasticText.text = $"Plastic: {_collectedPlastic}\n{_totalPlastic} left";
+        glassText.text = $"Glass: {_collectedGlass}\n{_totalGlass} left";
+        metalText.text = $"Metal: {_collectedMetal}\n{_totalMetal} left";
         limitText.text = $"Space left: {_collectionLimitCounter}";
 
         if(_collectionLimitCounter == 0)
