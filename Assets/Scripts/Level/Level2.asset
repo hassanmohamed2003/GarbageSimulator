@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2475b13210589c74195870f491b47bba, type: 3}
-  m_Name: Level1
+  m_Name: Level2
   m_EditorClassIdentifier: 
   Plastic: 2
   Metal: 2
@@ -18,4 +18,4 @@ MonoBehaviour:
   Enemies: 0
   Time: 60
   CollectLimit: 3
-  showTutorial: 1
+  showTutorial: 0
