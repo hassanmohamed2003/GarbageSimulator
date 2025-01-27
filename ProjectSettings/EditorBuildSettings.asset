@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GameLoop.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/GameLoopUI.unity
+    path: Assets/Scenes/GameLoopUI.unity
     guid: 7a72ae367bb570048b75ec6a2d698402
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

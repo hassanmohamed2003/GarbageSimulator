@@ -92,7 +92,7 @@ public class PlayerActions : MonoBehaviour
         metalText.text = $"<sprite=1>: {_collectedMetal}";
         limitText.text = $"Space left: {_collectionLimitCounter}";
 
-        totalLeftText.text = $"{_totalItems}: trash left";
+        totalLeftText.text = $"Trash Left:{_totalItems}";
         if (_collectionLimitCounter == 0)
         {
             limitText.text = $"Bag Full!";
