@@ -1,10 +1,12 @@
+using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class AIChase : MonoBehaviour
 {
     public GameObject player;
-    public CircleCollider2D detectionRange;
+    private CircleCollider2D detectionRange;
 
     [SerializeField]
     private float _speed;
@@ -24,6 +26,7 @@ public class AIChase : MonoBehaviour
     {
         _isRoamingRight = true;
         currentPosition = transform.position.x;
+        detectionRange = gameObject.GetComponent<CircleCollider2D>();
     }
 
     // Update is called once per frame
@@ -34,6 +37,8 @@ public class AIChase : MonoBehaviour
         direction.Normalize();
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
+        Debug.Log(_playerDetected);
+
         if (_playerDetected)
         {
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, _speed * Time.deltaTime);
@@ -41,6 +46,16 @@ public class AIChase : MonoBehaviour
         else
         {
             Roaming();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!collision.gameObject.GetComponent<PlayerActions>())
+        {
+            Vector3 moveDirection = (transform.position - collision.transform.position).normalized;
+
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + moveDirection, _speed * Time.deltaTime);
         }
     }
 
@@ -57,8 +72,12 @@ public class AIChase : MonoBehaviour
     {
         if (collision.gameObject.GetComponent("PlayerActions"))
         {
-            _playerDetected = false;
+            if (Vector2.Distance(transform.position, player.transform.position) > detectionRange.radius)
+            {
+                _playerDetected = false;
+            }
         }
+
     }
     void Roaming()
     {
