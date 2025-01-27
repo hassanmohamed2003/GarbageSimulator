@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class AIChase : MonoBehaviour
+public class EnemyChase : MonoBehaviour
 {
     public GameObject player;
     private CircleCollider2D detectionRange;

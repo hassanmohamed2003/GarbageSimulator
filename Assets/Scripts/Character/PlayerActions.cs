@@ -32,24 +32,23 @@ public class PlayerActions : MonoBehaviour
     private bool firstDrop = true;
     private bool firstBagFull = true;
     private bool bagTextShowing = false;
+    public UnityEvent onTutorialStart;
     public UnityEvent onFirstPickup;
     public UnityEvent onFirstDrop;
     public UnityEvent onFirstBagFull;
     public UnityEvent removeBagText;
 
-    public TextMeshProUGUI plasticText;
-    public TextMeshProUGUI glassText;
-    public TextMeshProUGUI metalText;
-    public TextMeshProUGUI limitText;
-    public TextMeshProUGUI totalLeftText;
     [SerializeField] private GameManager gameManager;
     
     public GameObject pickUpVFX; 
     public AudioClip dropSound;  
     private AudioSource audioSource;
+    
+    [SerializeField]
+    private UICounterManager _uiCounterManager;
+
     public FadeTransition fadeTransition;  
 
-    
     public float CollectedPlastic { get => _collectedPlastic; set => _collectedPlastic = value; }
     public float CollectedMetal { get => _collectedMetal; set => _collectedMetal = value; }
     public float CollectedGlass { get => _collectedGlass; set => _collectedGlass = value; }
@@ -71,6 +70,11 @@ public class PlayerActions : MonoBehaviour
         _collectionLimit = gameManager.levelRequirements.CollectLimit;
         _collectionLimitCounter = gameManager.levelRequirements.CollectLimit;
 
+        if (gameManager.levelRequirements.showTutorial)
+        {
+            onTutorialStart.Invoke();
+        }
+
         UpdateCounters();
     }
 
@@ -87,26 +91,20 @@ public class PlayerActions : MonoBehaviour
 
     public void UpdateCounters()
     {
-        Debug.Log(_collectedPlastic + ": amount plastic");
-        // Update the text of each TextMeshPro element
-        plasticText.text = $"<sprite=2>: {_collectedPlastic}";
-        glassText.text = $"<sprite=0>: {_collectedGlass}";
-        metalText.text = $"<sprite=1>: {_collectedMetal}";
-        limitText.text = $"Space left: {_collectionLimitCounter}";
-
-        totalLeftText.text = $"Trash Left:{_totalItems}";
-        if (_collectionLimitCounter == 0)
-        {
-            limitText.text = $"Bag Full!";
-        }
+        _uiCounterManager.UpdateCounters(
+            _collectedPlastic,
+            _collectedGlass,
+            _collectedMetal,
+            _collectionLimitCounter,
+            _totalItems
+        );
 
         _trashObject = null;
         _containerObject = null;
 
         bool hasNoItemsCollected = _collectedGlass == 0 && _collectedPlastic == 0 && _collectedMetal == 0;
-        if(_totalItems == 0 && hasNoItemsCollected)
+        if (_totalItems == 0 && hasNoItemsCollected)
         {
-            limitText.text = $"Completed!";
             onCompleted.Invoke();
             
             if (fadeTransition != null)
@@ -118,14 +116,16 @@ public class PlayerActions : MonoBehaviour
 
     private void onDrop(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-
-
         if (_containerObject != null && _containerObject.TryGetComponent<Container>(out Container container))
         {
             if (firstDrop)
             {
                 firstDrop = false;
-                onFirstDrop.Invoke();
+                if (gameManager.levelRequirements.showTutorial)
+                {
+                    onFirstDrop.Invoke();
+                }
+
             }
             
             if (dropSound != null && audioSource != null)
@@ -199,8 +199,13 @@ public class PlayerActions : MonoBehaviour
             if (firstBagFull)
             {
                 firstBagFull = false;
-                bagTextShowing = true;
-                onFirstBagFull.Invoke();
+
+                if (gameManager.levelRequirements.showTutorial)
+                {
+                    bagTextShowing = true;
+                    onFirstBagFull.Invoke();
+                }
+
             }
 
             return;
@@ -211,7 +216,11 @@ public class PlayerActions : MonoBehaviour
             if (firstPickUp)
             {
                 firstPickUp = false;
-                onFirstPickup.Invoke();
+
+                if (gameManager.levelRequirements.showTutorial)
+                {
+                    onFirstPickup.Invoke();
+                }
             }
             
             
