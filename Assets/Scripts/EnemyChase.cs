@@ -1,12 +1,11 @@
-using System;
-using UnityEditor.Experimental.GraphView;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class EnemyChase : MonoBehaviour
 {
     public GameObject player;
     private CircleCollider2D detectionRange;
+    private Animator animator;
 
     [SerializeField]
     private float _speed;
@@ -22,39 +21,67 @@ public class EnemyChase : MonoBehaviour
     private float currentPosition;
     private bool _playerDetected;
 
+    [SerializeField]
+    private float slowDownDuration = 3f;
+    [SerializeField]
+    private float slowDownSpeed = 1f;
+
+    private bool isSlowedDown = false;
+
+    [SerializeField]
+    private float coolDownTime = 2f;
+    private float lastHitTime = -Mathf.Infinity;
+
     void Start()
     {
+        animator = GetComponent<Animator>();
         _isRoamingRight = true;
         currentPosition = transform.position.x;
         detectionRange = gameObject.GetComponent<CircleCollider2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         _distance = Vector2.Distance(transform.position, player.transform.position);
         Vector2 direction = player.transform.position - transform.position;
         direction.Normalize();
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        Debug.Log(_playerDetected);
+        float horizontal = direction.x;
+        float vertical = direction.y;
 
-        if (_playerDetected)
+        if (_playerDetected && !isSlowedDown)
         {
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, _speed * Time.deltaTime);
+            animator.SetFloat("Horizontal", horizontal);
+            animator.SetFloat("Vertical", vertical);
+            animator.SetFloat("Speed", _speed);
+        }
+        else if (_playerDetected && isSlowedDown)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, slowDownSpeed * Time.deltaTime);
+            animator.SetFloat("Horizontal", horizontal);
+            animator.SetFloat("Vertical", vertical);
+            animator.SetFloat("Speed", slowDownSpeed);
         }
         else
         {
             Roaming();
+            animator.SetFloat("Horizontal", _isRoamingRight ? 1 : -1);
+            animator.SetFloat("Vertical", 0);
+            animator.SetFloat("Speed", _speed);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.GetComponent<PlayerActions>())
+        if (collision.gameObject.GetComponent<PlayerActions>() && Time.time >= lastHitTime + coolDownTime)
+        {
+            StartCoroutine(SlowDown());
+            lastHitTime = Time.time;
+        }
+        else
         {
             Vector3 moveDirection = (transform.position - collision.transform.position).normalized;
-
             transform.position = Vector3.MoveTowards(transform.position, transform.position + moveDirection, _speed * Time.deltaTime);
         }
     }
@@ -63,7 +90,6 @@ public class EnemyChase : MonoBehaviour
     {
         if (collision.gameObject.GetComponent("PlayerActions"))
         {
-
             _playerDetected = true;
         }
     }
@@ -77,13 +103,11 @@ public class EnemyChase : MonoBehaviour
                 _playerDetected = false;
             }
         }
-
     }
+
     void Roaming()
     {
         float moveDirection = _isRoamingRight ? 1 : -1;
-
-
         transform.position = new Vector3(transform.position.x + moveDirection * _speed * Time.deltaTime, transform.position.y, transform.position.z);
 
         if (transform.position.x > currentPosition + _roamingDistance)
@@ -96,5 +120,17 @@ public class EnemyChase : MonoBehaviour
             _isRoamingRight = true;
             currentPosition = transform.position.x;
         }
+    }
+
+    private IEnumerator SlowDown()
+    {
+        isSlowedDown = true;
+        float originalSpeed = _speed;
+        _speed = slowDownSpeed;
+
+        yield return new WaitForSeconds(slowDownDuration);
+
+        _speed = originalSpeed;
+        isSlowedDown = false;
     }
 }

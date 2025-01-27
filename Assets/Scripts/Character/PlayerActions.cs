@@ -43,9 +43,11 @@ public class PlayerActions : MonoBehaviour
     public GameObject pickUpVFX; 
     public AudioClip dropSound;  
     private AudioSource audioSource;
-
+    
     [SerializeField]
     private UICounterManager _uiCounterManager;
+
+    public FadeTransition fadeTransition;  
 
     public float CollectedPlastic { get => _collectedPlastic; set => _collectedPlastic = value; }
     public float CollectedMetal { get => _collectedMetal; set => _collectedMetal = value; }
@@ -104,6 +106,11 @@ public class PlayerActions : MonoBehaviour
         if (_totalItems == 0 && hasNoItemsCollected)
         {
             onCompleted.Invoke();
+            
+            if (fadeTransition != null)
+            {
+                fadeTransition.StartTransition();  
+            }
         }
     }
 

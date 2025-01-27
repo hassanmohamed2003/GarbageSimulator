@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class Timer : MonoBehaviour
     private bool levelCompleted = false;
     [SerializeField] private GameManager gameManager;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         timerText = GetComponent<TextMeshProUGUI>();
@@ -18,12 +18,15 @@ public class Timer : MonoBehaviour
         Debug.Log(timerSeconds);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(timerSeconds <= 0)
+        if (timerSeconds <= 0)
         {
             timerOn = false;
+            if (!levelCompleted) 
+            {
+                LevelFailed();  
+            }
         }
 
         if (timerOn)
@@ -31,7 +34,7 @@ public class Timer : MonoBehaviour
             timerSeconds -= Time.deltaTime;
             UpdateTimer();
         }
-        else if(!levelCompleted)
+        else if (!levelCompleted)
         {
             string gameOver = "Time is up!";
             timerText.text = gameOver;
@@ -48,5 +51,20 @@ public class Timer : MonoBehaviour
     {
         levelCompleted = true;
         timerOn = false;
+    }
+
+    public void DecreaseTime(float seconds)
+    {
+        timerSeconds -= seconds;
+        if (timerSeconds < 0) 
+        {
+            timerSeconds = 0;
+        }
+    }
+
+    private void LevelFailed()
+    {
+        levelCompleted = true; 
+        SceneManager.LoadScene("Death");  
     }
 }
