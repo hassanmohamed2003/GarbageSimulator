@@ -32,6 +32,7 @@ public class PlayerActions : MonoBehaviour
     private bool firstDrop = true;
     private bool firstBagFull = true;
     private bool bagTextShowing = false;
+    public UnityEvent onTutorialStart;
     public UnityEvent onFirstPickup;
     public UnityEvent onFirstDrop;
     public UnityEvent onFirstBagFull;
@@ -66,6 +67,11 @@ public class PlayerActions : MonoBehaviour
         _totalItems = gameManager.levelRequirements.Total;
         _collectionLimit = gameManager.levelRequirements.CollectLimit;
         _collectionLimitCounter = gameManager.levelRequirements.CollectLimit;
+
+        if (gameManager.levelRequirements.showTutorial)
+        {
+            onTutorialStart.Invoke();
+        }
 
         UpdateCounters();
     }
@@ -103,14 +109,16 @@ public class PlayerActions : MonoBehaviour
 
     private void onDrop(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-
-
         if (_containerObject != null && _containerObject.TryGetComponent<Container>(out Container container))
         {
             if (firstDrop)
             {
                 firstDrop = false;
-                onFirstDrop.Invoke();
+                if (gameManager.levelRequirements.showTutorial)
+                {
+                    onFirstDrop.Invoke();
+                }
+
             }
             
             if (dropSound != null && audioSource != null)
@@ -184,8 +192,13 @@ public class PlayerActions : MonoBehaviour
             if (firstBagFull)
             {
                 firstBagFull = false;
-                bagTextShowing = true;
-                onFirstBagFull.Invoke();
+
+                if (gameManager.levelRequirements.showTutorial)
+                {
+                    bagTextShowing = true;
+                    onFirstBagFull.Invoke();
+                }
+
             }
 
             return;
@@ -196,7 +209,11 @@ public class PlayerActions : MonoBehaviour
             if (firstPickUp)
             {
                 firstPickUp = false;
-                onFirstPickup.Invoke();
+
+                if (gameManager.levelRequirements.showTutorial)
+                {
+                    onFirstPickup.Invoke();
+                }
             }
             
             

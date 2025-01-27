@@ -20,6 +20,11 @@ public class Tutorial : MonoBehaviour
         
     }
 
+    public void showPickUpText()
+    {
+        pickUpText.gameObject.SetActive(true);
+    }
+
     public void showDropText()
     {
         pickUpText.gameObject.SetActive(false);

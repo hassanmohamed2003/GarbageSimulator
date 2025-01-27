@@ -3,7 +3,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class AIChase : MonoBehaviour
+public class EnemyChase : MonoBehaviour
 {
     public GameObject player;
     private CircleCollider2D detectionRange;
