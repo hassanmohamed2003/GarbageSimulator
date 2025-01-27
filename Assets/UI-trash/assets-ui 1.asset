@@ -59,8 +59,8 @@ MonoBehaviour:
     m_FaceIndex: 0
     m_FamilyName: 
     m_StyleName: 
-    m_PointSize: 0
-    m_Scale: 0
+    m_PointSize: 200
+    m_Scale: 1
     m_UnitsPerEM: 0
     m_LineHeight: 0
     m_AscentLine: 0
