@@ -37,17 +37,15 @@ public class PlayerActions : MonoBehaviour
     public UnityEvent onFirstBagFull;
     public UnityEvent removeBagText;
 
-    public TextMeshProUGUI plasticText;
-    public TextMeshProUGUI glassText;
-    public TextMeshProUGUI metalText;
-    public TextMeshProUGUI limitText;
-    public TextMeshProUGUI totalLeftText;
     [SerializeField] private GameManager gameManager;
     
     public GameObject pickUpVFX; 
     public AudioClip dropSound;  
     private AudioSource audioSource;
-    
+
+    [SerializeField]
+    private UICounterManager _uiCounterManager;
+
     public float CollectedPlastic { get => _collectedPlastic; set => _collectedPlastic = value; }
     public float CollectedMetal { get => _collectedMetal; set => _collectedMetal = value; }
     public float CollectedGlass { get => _collectedGlass; set => _collectedGlass = value; }
@@ -85,26 +83,20 @@ public class PlayerActions : MonoBehaviour
 
     public void UpdateCounters()
     {
-        Debug.Log(_collectedPlastic + ": amount plastic");
-        // Update the text of each TextMeshPro element
-        plasticText.text = $"<sprite=2>: {_collectedPlastic}";
-        glassText.text = $"<sprite=0>: {_collectedGlass}";
-        metalText.text = $"<sprite=1>: {_collectedMetal}";
-        limitText.text = $"Space left: {_collectionLimitCounter}";
-
-        totalLeftText.text = $"Trash Left:{_totalItems}";
-        if (_collectionLimitCounter == 0)
-        {
-            limitText.text = $"Bag Full!";
-        }
+        _uiCounterManager.UpdateCounters(
+            _collectedPlastic,
+            _collectedGlass,
+            _collectedMetal,
+            _collectionLimitCounter,
+            _totalItems
+        );
 
         _trashObject = null;
         _containerObject = null;
 
         bool hasNoItemsCollected = _collectedGlass == 0 && _collectedPlastic == 0 && _collectedMetal == 0;
-        if(_totalItems == 0 && hasNoItemsCollected)
+        if (_totalItems == 0 && hasNoItemsCollected)
         {
-            limitText.text = $"Completed!";
             onCompleted.Invoke();
         }
     }
