@@ -15098,6 +15098,7 @@ GameObject:
   - component: {fileID: 1480869946}
   - component: {fileID: 1480869947}
   - component: {fileID: 1480869948}
+  - component: {fileID: 1480869949}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -15197,9 +15198,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1583355750}
-  container: {fileID: 1154967067}
+  detectionRange: {fileID: 0}
   _speed: 3
   _minimumDistance: 5
+  _roamingDistance: 10
 --- !u!212 &1480869948
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15255,6 +15257,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1480869949
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480869939}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.07389927, y: 0}
+  m_Radius: 6.3947344
 --- !u!1 &1490508644
 GameObject:
   m_ObjectHideFlags: 0
@@ -16727,7 +16765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4442167721312826889, guid: e8272a7b8237eb7429315501618bbb0a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.07
+      value: -6.75
       objectReference: {fileID: 0}
     - target: {fileID: 4442167721312826889, guid: e8272a7b8237eb7429315501618bbb0a, type: 3}
       propertyPath: m_LocalPosition.z
