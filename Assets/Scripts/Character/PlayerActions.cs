@@ -37,11 +37,11 @@ public class PlayerActions : MonoBehaviour
     public UnityEvent onFirstBagFull;
     public UnityEvent removeBagText;
 
-    //TODO: put this in a seperate class, this has nothing to do with Player
     public TextMeshProUGUI plasticText;
     public TextMeshProUGUI glassText;
     public TextMeshProUGUI metalText;
     public TextMeshProUGUI limitText;
+    public TextMeshProUGUI totalLeftText;
     [SerializeField] private GameManager gameManager;
     public float CollectedPlastic { get => _collectedPlastic; set => _collectedPlastic = value; }
     public float CollectedMetal { get => _collectedMetal; set => _collectedMetal = value; }
@@ -80,12 +80,13 @@ public class PlayerActions : MonoBehaviour
     {
         Debug.Log(_collectedPlastic + ": amount plastic");
         // Update the text of each TextMeshPro element
-        plasticText.text = $"Plastic: {_collectedPlastic}\n{_totalPlastic} left";
-        glassText.text = $"Glass: {_collectedGlass}\n{_totalGlass} left";
-        metalText.text = $"Metal: {_collectedMetal}\n{_totalMetal} left";
+        plasticText.text = $"<sprite=2>: {_collectedPlastic}";
+        glassText.text = $"<sprite=0>: {_collectedGlass}";
+        metalText.text = $"<sprite=1>: {_collectedMetal}";
         limitText.text = $"Space left: {_collectionLimitCounter}";
 
-        if(_collectionLimitCounter == 0)
+        totalLeftText.text = $"{_totalItems}: trash left";
+        if (_collectionLimitCounter == 0)
         {
             limitText.text = $"Bag Full!";
         }
