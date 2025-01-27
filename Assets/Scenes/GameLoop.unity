@@ -12147,6 +12147,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8769746231489370257, guid: 40dd338ebc07ef446bc887cbbe71bc47, type: 3}
   m_PrefabInstance: {fileID: 8431758395621190479}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &435630689 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 160083228198387035, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+  m_PrefabInstance: {fileID: 984137017}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &443990139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13095,6 +13100,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &984137017
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3296011231465205949, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5114765076795969844, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1583355750}
+    - target: {fileID: 5114765076795969844, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: detectionRange
+      value: 
+      objectReference: {fileID: 435630689}
+    - target: {fileID: 6911751634992054074, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.504949
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911751634992054074, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.8865883
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911751634992054074, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911751634992054074, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911751634992054074, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911751634992054074, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911751634992054074, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911751634992054074, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911751634992054074, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911751634992054074, guid: daffc845a094c294881c6abdacb3e696, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: daffc845a094c294881c6abdacb3e696, type: 3}
 --- !u!1 &1018560983
 GameObject:
   m_ObjectHideFlags: 0
@@ -15080,7 +15150,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1175157295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dab33460145504439228baf8f5de856, type: 3}
+  m_Script: {fileID: 11500000, guid: d631e3f935579704e8e34ab96db5a35e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1583355754}
@@ -17045,6 +17115,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1175157299}
   - {fileID: 8004682741222429214}
+  - {fileID: 984137017}
   - {fileID: 62754549}
   - {fileID: 1818627323}
   - {fileID: 1358319202}
