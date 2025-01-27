@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 83a05a27caf1aae418a56a7111166b5f
+guid: 4f65319131cff5f4aa354ae80118d112
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 339314870253340137
-    second: recycling 1_0
+      213: 2259871345193691383
+    second: foxgameover_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: recycling 1_0
+      name: foxgameover_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 10
-        height: 14
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9e54574a31d75b400800000000000000
-      internalID: 339314870253340137
+      spriteID: 7f8aa50e30dac5f10800000000000000
+      internalID: 2259871345193691383
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      recycling 1_0: 339314870253340137
+      foxgameover_0: 2259871345193691383
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

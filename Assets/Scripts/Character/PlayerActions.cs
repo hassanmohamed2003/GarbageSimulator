@@ -43,6 +43,11 @@ public class PlayerActions : MonoBehaviour
     public TextMeshProUGUI limitText;
     public TextMeshProUGUI totalLeftText;
     [SerializeField] private GameManager gameManager;
+    
+    public GameObject pickUpVFX; 
+    public AudioClip dropSound;  
+    private AudioSource audioSource;
+    
     public float CollectedPlastic { get => _collectedPlastic; set => _collectedPlastic = value; }
     public float CollectedMetal { get => _collectedMetal; set => _collectedMetal = value; }
     public float CollectedGlass { get => _collectedGlass; set => _collectedGlass = value; }
@@ -54,6 +59,8 @@ public class PlayerActions : MonoBehaviour
         _Input.Gameplay.PickingUp.performed += onPickUp;
         _Input.Gameplay.Drop.performed += onDrop;
         circleCollider = GetComponent<CircleCollider2D>();
+        
+        audioSource = GetComponent<AudioSource>();
 
         _totalPlastic = gameManager.levelRequirements.Plastic;
         _totalGlass = gameManager.levelRequirements.Glass;
@@ -112,6 +119,11 @@ public class PlayerActions : MonoBehaviour
             {
                 firstDrop = false;
                 onFirstDrop.Invoke();
+            }
+            
+            if (dropSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(dropSound);
             }
 
             switch (container.acceptedItem)
@@ -193,6 +205,12 @@ public class PlayerActions : MonoBehaviour
             {
                 firstPickUp = false;
                 onFirstPickup.Invoke();
+            }
+            
+            
+            if (pickUpVFX != null)
+            {
+                Instantiate(pickUpVFX, _trashObject.transform.position, Quaternion.identity);
             }
 
             _totalItems--;
