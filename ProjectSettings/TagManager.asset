@@ -8,6 +8,7 @@ TagManager:
   - Plastic
   - Glass
   - Metal
+  - Enemy
   layers:
   - Default
   - TransparentFX

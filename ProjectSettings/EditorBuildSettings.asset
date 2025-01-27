@@ -14,5 +14,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameLoopUI.unity
     guid: 7a72ae367bb570048b75ec6a2d698402
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: b1cdf00f032028646b10b85c1d35a620
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: ce8e5db21bfd7ad409612e30e255a20a
+  - enabled: 1
+    path: Assets/Scenes/Death.unity
+    guid: 5e528ecc37cf7da44bf0b0ecb002c165
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
