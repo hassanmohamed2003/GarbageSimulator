@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2475b13210589c74195870f491b47bba, type: 3}
   m_Name: Level3
   m_EditorClassIdentifier: 
-  Plastic: 2
-  Metal: 2
-  Glass: 2
+  Plastic: 4
+  Metal: 4
+  Glass: 4
   Enemies: 0
-  Time: 60
-  CollectLimit: 3
+  Time: 300
+  CollectLimit: 2
   showTutorial: 0

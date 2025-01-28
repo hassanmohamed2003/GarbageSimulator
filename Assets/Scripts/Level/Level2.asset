@@ -16,6 +16,6 @@ MonoBehaviour:
   Metal: 2
   Glass: 2
   Enemies: 0
-  Time: 60
+  Time: 90
   CollectLimit: 3
   showTutorial: 0
