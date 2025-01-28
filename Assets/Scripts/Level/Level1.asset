@@ -15,7 +15,7 @@ MonoBehaviour:
   Plastic: 2
   Metal: 2
   Glass: 2
-  Humans: 1
-  Animals: 1
+  Enemies: 0
   Time: 60
   CollectLimit: 3
+  showTutorial: 1
