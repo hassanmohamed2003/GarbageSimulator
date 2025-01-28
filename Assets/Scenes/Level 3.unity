@@ -119,8 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< Updated upstream
-=======
 --- !u!1001 &35762459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54376,7 +54374,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
->>>>>>> Stashed changes
 --- !u!1 &1621477046
 GameObject:
   m_ObjectHideFlags: 0
@@ -54469,8 +54466,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
-=======
 --- !u!114 &1621477050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55157,14 +55152,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 484886396800869120, guid: 763ef54a6ef59244b8d31b49e30503bf, type: 3}
   m_PrefabInstance: {fileID: 2035339098}
   m_PrefabAsset: {fileID: 0}
->>>>>>> Stashed changes
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1621477049}
-<<<<<<< Updated upstream
-=======
   - {fileID: 1262680920}
   - {fileID: 816950663}
   - {fileID: 952906066}
@@ -55177,4 +55169,3 @@ SceneRoots:
   - {fileID: 1165290478}
   - {fileID: 1097591129}
   - {fileID: 1540064087}
->>>>>>> Stashed changes
